@@ -22,12 +22,12 @@ const iconMap: Record<string, React.ElementType> = {
 
 export const LinkButton: React.FC<LinkButtonProps> = ({ link }) => {
   const Icon = iconMap[link.icon] || ExternalLink;
+  const isAppIntent = link.url.startsWith('tel:') || link.url.startsWith('mailto:') || link.url.startsWith('sms:');
 
   return (
     <a
       href={link.url}
-      target="_blank"
-      rel="noopener noreferrer"
+      {...(!isAppIntent ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className={cn(
         "group relative flex items-center w-full p-4 mb-4 rounded-xl",
         "bg-white/5 backdrop-blur-md border border-white/10",

@@ -64,24 +64,6 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
             <LinkButton key={link.id} link={link} />
           ))}
         </div>
-
-        {showQR && (
-          <div className="mt-12 flex flex-col items-center">
-            <h2 className="text-lg font-semibold text-white mb-6">Your QR Code</h2>
-            <QRCodeDisplay url={profileUrl} businessName={business.name} />
-          </div>
-        )}
-        
-        {!showQR && (
-          <div className="mt-10 text-center">
-            <a
-              href={`/${slug}?qr=1`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-white text-sm font-medium transition-colors border border-white/10"
-            >
-              📲 View QR Code
-            </a>
-          </div>
-        )}
         
         <footer className="mt-16 text-center text-sm text-white/30">
           <p>Powered by <span className="text-indigo-400 font-medium">Scanly</span></p>
