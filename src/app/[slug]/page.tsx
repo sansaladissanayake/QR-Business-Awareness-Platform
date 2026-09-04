@@ -48,7 +48,9 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
     })),
   };
 
-  const profileUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/${slug}`;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL 
+    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+  const profileUrl = `${baseUrl}/${slug}`;
   const showQR = qr === '1';
 
   return (
