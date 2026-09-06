@@ -70,15 +70,27 @@ export default function Home() {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-          <Link 
-            href="/register"
-            className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-full overflow-hidden transition-all shadow-lg shadow-indigo-500/30"
-          >
-            <span className="relative flex items-center gap-2">
-              Create Your Profile
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </Link>
+          <Show when="signed-out">
+            <SignInButton mode="modal" forceRedirectUrl="/register" signUpForceRedirectUrl="/register">
+              <button className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-full overflow-hidden transition-all shadow-lg shadow-indigo-500/30">
+                <span className="relative flex items-center gap-2">
+                  Create Your Profile
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </button>
+            </SignInButton>
+          </Show>
+          <Show when="signed-in">
+            <Link 
+              href="/register"
+              className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-full overflow-hidden transition-all shadow-lg shadow-indigo-500/30"
+            >
+              <span className="relative flex items-center gap-2">
+                Create Your Profile
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Link>
+          </Show>
           <Link 
             href="/console-items-lk"
             className="group inline-flex items-center justify-center px-8 py-4 font-semibold text-white bg-white/10 backdrop-blur-sm rounded-full overflow-hidden transition-all hover:bg-white/15 border border-white/20"
