@@ -22,11 +22,25 @@ const iconMap: Record<string, React.ElementType> = {
 
 export const LinkButton: React.FC<LinkButtonProps> = ({ link }) => {
   const Icon = iconMap[link.icon] || ExternalLink;
-  const isAppIntent = link.url.startsWith('tel:') || link.url.startsWith('mailto:') || link.url.startsWith('sms:');
+  let formattedUrl = link.url;
+  if (link.icon === 'Phone' && !formattedUrl.startsWith('tel:')) {
+    // Remove any spaces or dashes from the phone number
+    formattedUrl = `tel:${formattedUrl.replace(/[\s-]/g, '')}`;
+  } else if (link.icon === 'Mail' && !formattedUrl.startsWith('mailto:')) {
+    formattedUrl = `mailto:${formattedUrl}`;
+  } else if (link.icon === 'MessageCircle' && !formattedUrl.startsWith('http')) {
+    // If it's just a number, prefix with wa.me
+    formattedUrl = `https://wa.me/${formattedUrl.replace(/[\s+-]/g, '')}`;
+  } else if (!formattedUrl.startsWith('http') && !formattedUrl.startsWith('tel:') && !formattedUrl.startsWith('mailto:')) {
+    // Fallback for general website links if they forgot https://
+    formattedUrl = `https://${formattedUrl}`;
+  }
+
+  const isAppIntent = formattedUrl.startsWith('tel:') || formattedUrl.startsWith('mailto:') || formattedUrl.startsWith('sms:');
 
   return (
     <a
-      href={link.url}
+      href={formattedUrl}
       {...(!isAppIntent ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className={cn(
         "group relative flex items-center w-full p-4 mb-4 rounded-xl",
