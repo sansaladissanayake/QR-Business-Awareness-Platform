@@ -79,7 +79,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
         )}
         
         <footer className="mt-16 text-center text-sm text-white/30">
-          <p>Powered by <span className="text-indigo-400 font-medium">Scanly</span></p>
+          <p>Powered by <span className="text-indigo-400 font-medium">Beam Lab</span></p>
         </footer>
       </div>
     </main>
