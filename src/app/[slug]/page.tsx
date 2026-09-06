@@ -74,7 +74,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
               <h2 className="text-lg font-semibold text-white">Owner Controls</h2>
               <p className="text-sm text-gray-400">Only you can see this section.</p>
             </div>
-            <QRCodeDisplay profileUrl={profileUrl} />
+            <QRCodeDisplay url={profileUrl} businessName={business.name} />
           </div>
         )}
         
