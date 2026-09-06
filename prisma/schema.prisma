@@ -10,10 +10,11 @@ datasource db {
 
 model Business {
   id          String   @id @default(cuid())
+  userId      String?  // Clerk user ID
   slug        String   @unique
   name        String
   description String
-  logo        String   @default("")
+  logo        String?  @default("")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   links       Link[]
