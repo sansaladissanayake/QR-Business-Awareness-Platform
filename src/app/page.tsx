@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { QrCode, ArrowRight, Zap, Globe, Shield, User } from "lucide-react";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
@@ -13,21 +13,21 @@ export default function Home() {
           Scanly
         </div>
         <div>
-          <SignedOut>
+          <Show when="signed-out">
             <SignInButton mode="modal">
               <button className="text-sm font-semibold text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-colors">
                 Sign In
               </button>
             </SignInButton>
-          </SignedOut>
-          <SignedIn>
+          </Show>
+          <Show when="signed-in">
             <div className="flex items-center gap-4">
               <Link href="/dashboard" className="text-sm font-semibold text-gray-300 hover:text-white transition-colors">
                 Dashboard
               </Link>
               <UserButton appearance={{ elements: { avatarBox: "w-8 h-8" } }} />
             </div>
-          </SignedIn>
+          </Show>
         </div>
       </div>
 
