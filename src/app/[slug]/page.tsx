@@ -4,6 +4,7 @@ import { ProfileHeader } from '@/components/ProfileHeader';
 import { LinkButton } from '@/components/LinkButton';
 import { QRCodeDisplay } from '@/components/QRCodeDisplay';
 import { Business, Link as BusinessLink } from '@/data/businesses';
+import { auth } from '@clerk/nextjs/server';
 
 interface ProfilePageProps {
   params: Promise<{ slug: string }>;
@@ -52,7 +53,9 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
     || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` 
     : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'));
   const profileUrl = `${baseUrl}/${slug}`;
-  const showQR = qr === '1';
+  
+  const authObj = await auth();
+  const isOwner = authObj?.userId === businessData.userId;
 
   return (
     <main className="min-h-screen py-12 px-4 sm:px-6 flex flex-col items-center">
@@ -64,6 +67,16 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
             <LinkButton key={link.id} link={link} />
           ))}
         </div>
+
+        {isOwner && (
+          <div className="mt-12 pt-8 border-t border-white/10">
+            <div className="text-center mb-6">
+              <h2 className="text-lg font-semibold text-white">Owner Controls</h2>
+              <p className="text-sm text-gray-400">Only you can see this section.</p>
+            </div>
+            <QRCodeDisplay profileUrl={profileUrl} />
+          </div>
+        )}
         
         <footer className="mt-16 text-center text-sm text-white/30">
           <p>Powered by <span className="text-indigo-400 font-medium">Scanly</span></p>
