@@ -22,7 +22,7 @@ const iconMap: Record<string, React.ElementType> = {
 
 export const LinkButton: React.FC<LinkButtonProps> = ({ link }) => {
   const Icon = iconMap[link.icon] || ExternalLink;
-  let formattedUrl = link.url;
+  let formattedUrl = link.url ? link.url.trim() : '';
   if (link.icon === 'Phone' && !formattedUrl.startsWith('tel:')) {
     // Remove any spaces or dashes from the phone number
     formattedUrl = `tel:${formattedUrl.replace(/[\s-]/g, '')}`;
