@@ -7,7 +7,7 @@ export default async function EditBusinessPage({ params }: { params: Promise<{ s
   const { userId } = await auth();
   
   if (!userId) {
-    redirect('/sign-in');
+    redirect('/');
   }
 
   const { slug } = await params;
