@@ -27,6 +27,7 @@ export async function GET() {
       message: error.message,
       name: error.name,
       code: error.code,
-    }, { status: 500 });
+      stack: error.stack,
+    }, { status: 200 });
   }
 }
