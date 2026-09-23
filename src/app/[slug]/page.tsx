@@ -51,7 +51,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL 
     || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` 
-    : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'));
+    : 'https://qr-business-awareness-platform.vercel.app');
   const profileUrl = `${baseUrl}/${slug}`;
   
   const authObj = await auth();
