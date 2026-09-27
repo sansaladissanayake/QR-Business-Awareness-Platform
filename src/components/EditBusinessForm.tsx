@@ -15,7 +15,7 @@ type Platform = {
 };
 
 const PLATFORMS: Platform[] = [
-  { id: 'maps', label: 'Google Maps', icon: <MapPin className="w-4 h-4" />, placeholder: 'Paste Google Maps link...', prefix: 'https://' },
+  { id: 'maps', label: 'Google Maps', icon: <MapPin className="w-4 h-4" />, placeholder: 'Full Google Maps link (e.g. https://www.google.com/maps/search/...)', prefix: 'https://' },
   { id: 'facebook', label: 'Facebook', icon: <FaFacebook className="w-4 h-4" />, placeholder: 'https://facebook.com/yourpage', prefix: 'https://facebook.com/' },
   { id: 'instagram', label: 'Instagram', icon: <FaInstagram className="w-4 h-4" />, placeholder: 'https://instagram.com/yourhandle', prefix: 'https://instagram.com/' },
   { id: 'whatsapp', label: 'WhatsApp', icon: <MessageCircle className="w-4 h-4" />, placeholder: 'https://wa.me/94XXXXXXXXX', prefix: 'https://wa.me/' },

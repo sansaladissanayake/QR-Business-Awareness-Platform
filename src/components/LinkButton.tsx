@@ -31,6 +31,8 @@ export const LinkButton: React.FC<LinkButtonProps> = ({ link }) => {
   } else if (link.icon === 'MessageCircle' && !formattedUrl.startsWith('http')) {
     // If it's just a number, prefix with wa.me
     formattedUrl = `https://wa.me/${formattedUrl.replace(/[\s+-]/g, '')}`;
+  } else if (link.icon === 'TikTok' && formattedUrl && !formattedUrl.startsWith('http')) {
+    formattedUrl = `https://tiktok.com/@${formattedUrl.replace(/^@/, '')}`;
   } else if (!formattedUrl.startsWith('http') && !formattedUrl.startsWith('tel:') && !formattedUrl.startsWith('mailto:')) {
     // Fallback for general website links if they forgot https://
     formattedUrl = `https://${formattedUrl}`;

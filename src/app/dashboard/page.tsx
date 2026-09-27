@@ -11,10 +11,18 @@ export default async function DashboardPage() {
     redirect('/');
   }
 
-  const businesses = await prisma.business.findMany({
-    where: { userId },
-    orderBy: { createdAt: 'desc' },
-  });
+  let businesses: Awaited<ReturnType<typeof prisma.business.findMany>> = [];
+  let dbError = false;
+
+  try {
+    businesses = await prisma.business.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+    });
+  } catch (err) {
+    console.error('Failed to query businesses on dashboard:', err);
+    dbError = true;
+  }
 
   return (
     <main className="min-h-screen py-12 px-4 sm:px-6 max-w-5xl mx-auto">
@@ -29,7 +37,12 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      {businesses.length === 0 ? (
+      {dbError ? (
+        <div className="bg-red-500/10 border border-red-500/20 rounded-3xl p-8 text-center text-red-200">
+          <p className="text-lg font-semibold mb-2">Unable to load business profiles</p>
+          <p className="text-sm text-red-300/80 mb-4">Please check your database environment configuration on Vercel.</p>
+        </div>
+      ) : businesses.length === 0 ? (
         <div className="bg-white/5 border border-white/10 rounded-3xl p-12 text-center flex flex-col items-center">
           <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-4">
             <QrCode className="w-8 h-8 text-white/50" />
