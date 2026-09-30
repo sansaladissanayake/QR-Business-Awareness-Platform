@@ -5,8 +5,15 @@ import Link from 'next/link';
 import { Plus, Edit2, QrCode } from 'lucide-react';
 
 export default async function DashboardPage() {
-  const { userId } = await auth();
-  
+  let userId: string | null = null;
+
+  try {
+    const authObj = await auth();
+    userId = authObj.userId;
+  } catch (err) {
+    console.error('Clerk auth() failed on dashboard:', err);
+  }
+
   if (!userId) {
     redirect('/');
   }

@@ -1,12 +1,8 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { clerkMiddleware } from '@clerk/nextjs/server';
 
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/register(.*)']);
-
-export default clerkMiddleware(async (auth, req) => {
-  if (isProtectedRoute(req)) {
-    await auth.protect();
-  }
-});
+// Clerk middleware — just initialises the Clerk session on every request.
+// Individual pages (dashboard, register) handle their own auth checks via auth().
+export default clerkMiddleware();
 
 export const config = {
   matcher: [
