@@ -1,16 +1,24 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-// Clerk middleware — initialises the Clerk session on every request.
-// '/__clerk/:path*' is required for Clerk proxy verification on vercel.app domains.
-export default clerkMiddleware();
+export function middleware(req: NextRequest) {
+  const basicAuth = req.headers.get('authorization');
+  
+  if (basicAuth) {
+    const authValue = basicAuth.split(' ')[1];
+    const [user, pwd] = atob(authValue).split(':');
+
+    if (user === 'ADMINSALA' && pwd === 'mekamalawadayak') {
+      return NextResponse.next();
+    }
+  }
+
+  return new NextResponse('Auth required', {
+    status: 401,
+    headers: { 'WWW-Authenticate': 'Basic realm="Secure Area"' },
+  });
+}
 
 export const config = {
-  matcher: [
-    // Clerk proxy path — required for domain verification on vercel.app
-    '/__clerk(.*)',
-    // Skip Next.js internals and all static files, unless found in search params
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
-    '/(api|trpc)(.*)',
-  ],
+  matcher: ['/dashboard/:path*', '/register/:path*'],
 };

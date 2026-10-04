@@ -1,15 +1,8 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
-import { auth } from '@clerk/nextjs/server';
 import { EditBusinessForm } from '@/components/EditBusinessForm';
 
 export default async function EditBusinessPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { userId } = await auth();
-  
-  if (!userId) {
-    redirect('/');
-  }
-
   const { slug } = await params;
   const business = await prisma.business.findUnique({
     where: { slug },
@@ -18,11 +11,6 @@ export default async function EditBusinessPage({ params }: { params: Promise<{ s
 
   if (!business) {
     notFound();
-  }
-
-  // Ensure only the owner can edit
-  if (business.userId !== userId) {
-    redirect('/dashboard');
   }
 
   const initialData = {

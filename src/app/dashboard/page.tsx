@@ -1,29 +1,14 @@
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { Plus, Edit2, QrCode } from 'lucide-react';
 
 export default async function DashboardPage() {
-  let userId: string | null = null;
-
-  try {
-    const authObj = await auth();
-    userId = authObj.userId;
-  } catch (err) {
-    console.error('Clerk auth() failed on dashboard:', err);
-  }
-
-  if (!userId) {
-    redirect('/');
-  }
-
   let businesses: Awaited<ReturnType<typeof prisma.business.findMany>> = [];
   let dbError = false;
 
   try {
     businesses = await prisma.business.findMany({
-      where: { userId },
+      where: { userId: 'ADMINSALA' },
       orderBy: { createdAt: 'desc' },
     });
   } catch (err) {

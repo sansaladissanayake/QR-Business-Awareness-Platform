@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { auth } from '@clerk/nextjs/server';
 
 // Helper to generate a slug from a business name
 function generateSlug(name: string): string {
@@ -27,11 +26,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { userId } = await auth();
-    
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const userId = 'ADMINSALA';
 
     const body = await request.json();
     const { name, description, logo, links } = body;

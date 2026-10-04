@@ -1,15 +1,10 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { auth } from '@clerk/nextjs/server';
 
 export async function PUT(request: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const { userId } = await auth();
+    const userId = 'ADMINSALA';
     
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { slug } = await params;
     const body = await request.json();
     const { name, description, logo, links } = body;
@@ -22,9 +17,6 @@ export async function PUT(request: Request, { params }: { params: Promise<{ slug
     const existing = await prisma.business.findUnique({ where: { slug } });
     if (!existing) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    }
-    if (existing.userId !== userId) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     const business = await prisma.business.update({
