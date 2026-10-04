@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { ProfileHeader } from '@/components/ProfileHeader';
 import { LinkButton } from '@/components/LinkButton';
-import { QRCodeDisplay } from '@/components/QRCodeDisplay';
 import { Business, Link as BusinessLink } from '@/data/businesses';
 
 interface ProfilePageProps {
@@ -48,11 +47,6 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
     })),
   };
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL 
-    || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` 
-    : 'https://qr-business-awareness-platform.vercel.app');
-  const profileUrl = `${baseUrl}/${slug}`;
-  
   return (
     <main className="min-h-screen py-12 px-4 sm:px-6 flex flex-col items-center">
       <div className="w-full max-w-md mx-auto">
@@ -62,10 +56,6 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
           {business.links.map((link) => (
             <LinkButton key={link.id} link={link} />
           ))}
-        </div>
-
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col items-center">
-          <QRCodeDisplay url={profileUrl} businessName={business.name} />
         </div>
         
         <footer className="mt-16 text-center text-sm text-white/30">
