@@ -8,7 +8,6 @@ export default async function DashboardPage() {
 
   try {
     businesses = await prisma.business.findMany({
-      where: { userId: 'ADMINSALA' },
       orderBy: { createdAt: 'desc' },
     });
   } catch (err) {
